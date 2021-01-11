@@ -1,0 +1,87 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaUser
+metadata:
+  name: consent-soe-user
+  namespace: demo-services
+  labels:
+    strimzi.io/cluster: cluster
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: consent-soe
+          patternType: prefix
+        operation: Read
+      - resource:
+          type: topic
+          name: gkv-demo-consent-v1
+          patternType: literal
+        operation: Read
+      - resource:
+          type: topic
+          name: gkv-demo-consent-v1
+          patternType: literal
+        operation: Write
+      - resource:
+          type: topic
+          name: gkv-demo-consent-v1
+          patternType: literal
+        operation: Describe
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaUser
+metadata:
+  name: consent-sor-user
+  namespace: demo-services
+  labels:
+    strimzi.io/cluster: cluster
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: consent-sor
+          patternType: literal
+        operation: Read
+      - resource:
+          type: topic
+          name: gkv-demo-consent-v1
+          patternType: literal
+        operation: Read
+      - resource:
+          type: topic
+          name: gkv-demo-consent-v1
+          patternType: literal
+        operation: Write
+      - resource:
+          type: topic
+          name: gkv-demo-consent-v1
+          patternType: literal
+        operation: Describe
+      - resource:
+          type: topic
+          name: gkv-demo-consent-retry-v1
+          patternType: literal
+        operation: Read
+      - resource:
+          type: topic
+          name: gkv-demo-consent-retry-v1
+          patternType: literal
+        operation: Write
+      - resource:
+          type: topic
+          name: gkv-demo-consent-retry-v1
+          patternType: literal
+        operation: Describe
+      - resource:
+          type: topic
+          name: gkv-demo-consent-audit-v1
+          patternType: literal
+        operation: Write
