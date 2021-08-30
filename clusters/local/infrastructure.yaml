@@ -4,10 +4,10 @@ metadata:
   name: infrastructure
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 5m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/main
+  path: ./infrastructure
   prune: true
   validation: client

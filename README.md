@@ -16,6 +16,12 @@
 4. Bootstrap the cluster with the information you have prepared in the previous
    steps:
 
+   ```sh
+   k3d registry create registry.localhost --port 5000
+   
+   k3d cluster create --registry-use k3d-registry.localhost:5000
+   ```
+
     ```sh
     GITLAB_TOKEN=<TOKEN> flux bootstrap gitlab \
       --hostname=gitlab.codecentric.de \
