@@ -1,4 +1,20 @@
+# Keda Redis Demo
+
+![Layout of the Demo](Demo.jpg)
+
+This Demo repository shows how to automatically Scale Kubernetes Pods based on the Redis Queue length. The Project can automatically bootstrap the K3d cluster with Flux.
 ## Cluster Bootstrap
+
+0. Build and push the python docker images to the local k3d repository
+
+```sh
+k3d registry create registry.localhost --port 5000
+```
+
+```sh
+cd demo-apps
+docker-compose build && docker-compose push
+```
 
 1. Make sure that you have kubectl and the [Flux
    CLI](https://toolkit.fluxcd.io/get-started/#install-the-flux-cli) installed
@@ -17,8 +33,6 @@
    steps:
 
    ```sh
-   k3d registry create registry.localhost --port 5000
-   
    k3d cluster create --registry-use k3d-registry.localhost:5000
    ```
 
@@ -26,8 +40,8 @@
     GITLAB_TOKEN=<TOKEN> flux bootstrap gitlab \
       --hostname=gitlab.codecentric.de \
       --token-auth \
-      --owner=cloud-native-solingen \
-      --repository=flux2-demo \
+      --owner=marco \
+      --repository=keda-demo \
       --branch=master \
       --path=clusters/<CLUSTER>
     ```
