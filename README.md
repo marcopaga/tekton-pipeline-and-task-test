@@ -1,11 +1,9 @@
-# Keda Redis Demo
+# Tekton CI Demo
 
-![Layout of the Demo](Demo.jpg)
-
-This Demo repository shows how to automatically Scale Kubernetes Pods based on the Redis Queue length. The Project can automatically bootstrap the K3d cluster with Flux.
+This Demo repository will deploy and configure a Tekton CI System. The Project will automatically bootstrap a K3d cluster with Flux.
 ## Cluster Bootstrap
 
-0. Build and push the python docker images to the local k3d repository
+0. Setup a k3d repository
 
 ```sh
 k3d registry create registry.localhost --port 5000
@@ -21,8 +19,8 @@ docker-compose build && docker-compose push
    locally. Also set your current kubectl context to the cluster you want to
    bootstrap.
 
-2. Prepare a Gitlab-Token that is able to access this repository and has the
-   following scopes: `read_api`, `read_repository`, `write_repository`.
+2. Prepare a Github-Token that is able to access this repository and has the
+   following scopes: `repo_status`, `public_repo`.
 
 3. Choose a path inside this repository for the deployment manifests of the
    cluster. The different clusters are located in `clusters/`. This can either
