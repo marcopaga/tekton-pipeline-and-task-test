@@ -35,15 +35,12 @@ docker-compose build && docker-compose push
    ```
 
     ```sh
-    GITLAB_TOKEN=<TOKEN> flux bootstrap gitlab \
-      --hostname=gitlab.codecentric.de \
-      --token-auth \
-      --owner=marco \
-      --repository=keda-demo \
-      --branch=master \
-      --path=clusters/<CLUSTER>
+      GITHUB_USER=marcopaga GITHUB_TOKEN=<token> GITHUB_USER=marcopaga flux bootstrap github \
+      --owner=marcopaga \
+      --repository=tekton-demo \
+      --private=false \
+      --personal=true \
+      --branch=main \
+      --path=clusters/local
     ```
 
-5. If you have bootstrapped a new cluster, add deployment manifests to the
-   cluster's folder. You can take a look at existing ones and adjust them for
-   the new cluster's needs.
