@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- https://storage.googleapis.com/tekton-releases/pipeline/previous/v0.27.3/release.yaml
+- https://storage.googleapis.com/tekton-releases/triggers/previous/v0.16.0/release.yaml
+- https://storage.googleapis.com/tekton-releases/triggers/previous/v0.16.0/interceptors.yaml
+- https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.4/git-clone.yaml
+- https://raw.githubusercontent.com/tektoncd/catalog/main/task/buildah/0.2/buildah.yaml
