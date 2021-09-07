@@ -1,6 +1,39 @@
 # Tekton CI Demo
 
 This Demo repository will deploy and configure a Tekton CI System. The Project will automatically bootstrap a K3d cluster with Flux.
+
+![Layout of the Demo](demo.png)
+
+## Using the Tekton sample pipeline
+
+You can inspect the deployed tasks and pipelines by issuing those commands. Before following along make sure to install the [CLI tools](https://tekton.dev/docs/getting-started/#set-up-the-cli).
+
+```shell
+tkn task list
+tkn pipeline list
+```
+
+Create a pipeline run as follows and issue it via `kubectl create -f file.yaml` which will run the build pipeline.
+````yaml
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName:  build-container-pipeline-
+spec:
+  pipelineRef:
+    name:  build-container-pipeline
+  workspaces:
+    - name: build-workspace
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 50Mi
+
+````
+
 ## Cluster Bootstrap
 
 0. Setup a k3d repository
@@ -43,4 +76,3 @@ docker-compose build && docker-compose push
       --branch=main \
       --path=clusters/local
     ```
-
