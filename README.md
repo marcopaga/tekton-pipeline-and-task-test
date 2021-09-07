@@ -76,3 +76,17 @@ docker-compose build && docker-compose push
       --branch=main \
       --path=clusters/local
     ```
+   
+5. Check the progress of the deployment
+
+```shell
+kubectl get Kustomization -n flux-system -w
+```
+
+6. Connect to the Tekton Dashboard
+
+The Dashboard is deployed and accessible via the `tekton-dashboard` service on port 9097.
+
+```shell
+kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
+```
