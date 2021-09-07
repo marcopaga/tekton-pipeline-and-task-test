@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
 - ./tekton-release.yaml
 - ./tekton-triggers.yaml
-- ./tekton-interceptors.yaml
