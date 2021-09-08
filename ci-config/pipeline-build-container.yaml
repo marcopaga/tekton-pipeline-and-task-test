@@ -19,12 +19,14 @@ spec:
           value: "true"
     - name: build
       taskRef:
-        name: buildah
+        name: buildpacks
       runAfter:
         - fetch-repository
       params:
-        - name: IMAGE
+        - name: APP_IMAGE
           value: k3d-registry.localhost:5000/creator:latest
+        - name: BUILDER_IMAGE
+          value: gcr.io/buildpacks/builder:v1
       workspaces:
         - name: source
           workspace: build-workspace
