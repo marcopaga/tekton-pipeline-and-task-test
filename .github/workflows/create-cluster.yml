@@ -1,0 +1,19 @@
+name: create-cluster
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install K3d (see https://k3d.io/#installation) & flux
+        run: |
+          brew install fluxcd/tap/flux
+          brew install k3d
+
+      - name: Bootstrap k3d
+        run: |
+          k3d registry create registry.localhost --port 5000
+          k3d cluster create --registry-use k3d-registry.localhost:5000
