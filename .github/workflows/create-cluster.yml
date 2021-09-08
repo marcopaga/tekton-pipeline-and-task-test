@@ -8,10 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install K3d (see https://k3d.io/#installation) & flux
+      - name: Install K3d (see https://k3d.io/#installation) & flux & Tekton CLI
         run: |
           brew install fluxcd/tap/flux
           brew install k3d
+          brew tap tektoncd/tools
+          brew install tektoncd/tools/tektoncd-cli
 
       - name: Bootstrap k3d
         run: |
@@ -28,3 +30,8 @@ jobs:
           --personal=true \
           --branch=main \
           --path=clusters/local
+
+      - name: Run Tekton build
+        run: |
+          tkn task list
+          tkn pipeline list
