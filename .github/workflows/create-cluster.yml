@@ -21,7 +21,7 @@ jobs:
       - name: Install Flux into K3d cluster & connect to GitHub repository https://github.com/marcopaga/tekton-demo
         run: |
           GITHUB_USER=${{ github.actor }} GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} flux bootstrap github \
-          --owner=${{ github.actor }} \
+          --owner=marcopaga \
           --repository=tekton-demo \
           --private=false \
           --personal=true \
