@@ -31,7 +31,18 @@ jobs:
           --branch=main \
           --path=clusters/local
 
-      - name: Run Tekton build
+      - name: Wait for CRD Deployment
+        timeout-minutes: 5
+        run: |
+          { grep -q -m 1 "pipelines.tekton.dev"; kill $!; } < <(kubectl get crd -w)
+          kubectl -n default wait --for condition=established --timeout=180s crd/pipelines.tekton.dev
+
+      - name: Check Tekton tasks and pipelines
         run: |
           tkn task list
           tkn pipeline list
+
+      - name: Execute pipeline
+        run: |
+          kubectl create -f ./pipeline-run.yaml
+          tkn pipelinerun list
