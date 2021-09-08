@@ -18,9 +18,10 @@ jobs:
           k3d registry create registry.localhost --port 5000
           k3d cluster create --registry-use k3d-registry.localhost:5000
 
+      # See creation of Personal Access Token at https://fluxcd.io/docs/cmd/flux_bootstrap_github/
       - name: Install Flux into K3d cluster & connect to GitHub repository https://github.com/marcopaga/tekton-demo
         run: |
-          GITHUB_USER=${{ github.actor }} GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} flux bootstrap github \
+          GITHUB_USER=marcopaga GITHUB_TOKEN=${{ secrets.FLUX_GITHUB_TOKEN }} flux bootstrap github \
           --owner=marcopaga \
           --repository=tekton-demo \
           --private=false \
