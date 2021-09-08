@@ -42,11 +42,6 @@ spec:
 k3d registry create registry.localhost --port 5000
 ```
 
-```sh
-cd demo-apps
-docker-compose build && docker-compose push
-```
-
 1. Make sure that you have kubectl and the [Flux
    CLI](https://toolkit.fluxcd.io/get-started/#install-the-flux-cli) installed
    locally. Also set your current kubectl context to the cluster you want to
