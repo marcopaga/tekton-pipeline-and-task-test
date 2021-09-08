@@ -42,18 +42,13 @@ spec:
 k3d registry create registry.localhost --port 5000
 ```
 
-```sh
-cd demo-apps
-docker-compose build && docker-compose push
-```
-
 1. Make sure that you have kubectl and the [Flux
    CLI](https://toolkit.fluxcd.io/get-started/#install-the-flux-cli) installed
    locally. Also set your current kubectl context to the cluster you want to
    bootstrap.
 
 2. Prepare a Github-Token that is able to access this repository and has the
-   following scopes: `repo_status`, `public_repo`.
+   following scopes: `repo_status`, `public_repo`. You can find the dialog here: https://github.com/settings/tokens
 
 3. Choose a path inside this repository for the deployment manifests of the
    cluster. The different clusters are located in `clusters/`. This can either
@@ -68,7 +63,7 @@ docker-compose build && docker-compose push
    ```
 
     ```sh
-      GITHUB_USER=marcopaga GITHUB_TOKEN=<token> GITHUB_USER=marcopaga flux bootstrap github \
+      GITHUB_TOKEN=<token> GITHUB_USER=marcopaga flux bootstrap github \
       --owner=marcopaga \
       --repository=tekton-demo \
       --private=false \
