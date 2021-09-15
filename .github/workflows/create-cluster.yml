@@ -32,10 +32,18 @@ jobs:
           --path=clusters/local
 
       - name: Wait for CRD Deployment
-        timeout-minutes: 5
+        timeout-minutes: 3
+        continue-on-error: true
         run: |
           { grep -q -m 1 "pipelines.tekton.dev"; kill $!; } < <(kubectl get crd -w)
           kubectl -n default wait --for condition=established --timeout=180s crd/pipelines.tekton.dev
+
+      - name: Introspection
+        run: |
+          kubectl get namespaces
+          kubectl get pods --all-namespaces
+          kubectl get deployments --all-namespaces
+          kubectl get Kustomization -n flux-system
 
       - name: Check Tekton tasks and pipelines
         run: |
