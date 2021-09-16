@@ -35,12 +35,21 @@ jobs:
           --branch=${{ steps.vars.outputs.branch_name }} \
           --path=clusters/local
 
-      - name: Wait for CRD Deployment
+      - name: Wait for Flux CRD Deployment
         timeout-minutes: 3
         continue-on-error: true
         run: |
-          { grep -q -m 1 "pipelines.tekton.dev"; kill $!; } < <(kubectl get crd -w)
-          kubectl -n default wait --for condition=established --timeout=180s crd/pipelines.tekton.dev
+          { grep -q -m 1 "kustomizations.kustomize.toolkit.fluxcd.io"; kill $!; } < <(kubectl get crd -w)
+          kubectl -n default wait --for condition=established --timeout=180s crd/kustomizations.kustomize.toolkit.fluxcd.io
+
+      - name: Wait for Kustomizations to be ready
+        timeout-minutes: 5
+        continue-on-error: true
+        run: |
+          kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/flux-system
+          kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/tekton-base
+          kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/tekton-tasks
+          kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/ci-config
 
       - name: Introspection
         run: |
