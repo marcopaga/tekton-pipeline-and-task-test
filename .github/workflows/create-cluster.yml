@@ -8,6 +8,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
+
       - name: Install K3d (see https://k3d.io/#installation) & flux & Tekton CLI
         run: |
           brew install fluxcd/tap/flux
@@ -28,7 +32,7 @@ jobs:
           --repository=tekton-demo \
           --private=false \
           --personal=true \
-          --branch=main \
+          --branch=${{ steps.vars.outputs.branch_name }} \
           --path=clusters/local
 
       - name: Wait for CRD Deployment
