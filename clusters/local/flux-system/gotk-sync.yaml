@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: branch-name-parameter
+    branch: wait-for-deployment-to-be-ready
   secretRef:
     name: flux-system
   url: ssh://git@github.com/marcopaga/tekton-demo
