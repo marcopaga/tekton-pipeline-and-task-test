@@ -4,7 +4,7 @@ metadata:
   generateName:  build-container-pipeline-
 spec:
   pipelineRef:
-    name:  build-container-pipeline
+    name:  hello-goodbye-pipeline
   workspaces:
     - name: build-workspace
       volumeClaimTemplate:
