@@ -59,12 +59,12 @@ jobs:
           kubectl get deployments --all-namespaces
           kubectl get Kustomization -n flux-system
 
-      - name: Check Tekton tasks and pipelines
+      - name: Show Tekton tasks and pipelines
         run: |
           tkn task list
           tkn pipeline list
 
-      - name: Execute and verify hello-world pipeline
+      - name: Execute and verify hello-world pipeline is run to completion
         run: |
           PIPELINE_RUN_NAME=$(kubectl create -f ./hello-goodbye-pipeline-run.yaml -o json | jq -r '.metadata.name')
           kubectl -n default wait --for=condition=SUCCEEDED=True --timeout=60s pipelineruns.tekton.dev/$PIPELINE_RUN_NAME
