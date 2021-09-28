@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: dynamic-github-user-repo-names
+    branch: main
   secretRef:
     name: flux-system
   url: ssh://git@github.com/marcopaga/tekton-demo
