@@ -12,13 +12,30 @@ The up-to-date bootstrap process is documented in the GitHub Actions workflow yo
 ## Cluster Bootstrap
 
 On a high level you need to provide a Github token with the following scopes: `repo_status`, `public_repo`. You can find the management dialog [here](https://github.com/settings/tokens). This token is used by the flux operator to connect to the git repository and roll-out the desired cluster state based on this repository.
- 
 
-1. Bootstrap of the cluster and the Tekton services and config
+#### 0. Create K3d registry (if you don't already have one):
+
+```sh
+k3d registry create registry.localhost --port 5000
+```
+
+
+#### 2. Create K3d cluster that uses the registry, incl. Tekton services and config:
 
 ```sh
 k3d cluster create --registry-use k3d-registry.localhost:5000
 ```
+
+This might take some time.
+
+#### 3. Switch kubectl to K3d context & inspect cluster-info
+
+```shell
+kubectl config use-context k3d-k3s-default
+kubectl cluster-info
+```
+
+#### 4. Install Flux components with flux bootstrap:
 
  ```sh
    GITHUB_TOKEN=<token> GITHUB_USER=<username> flux bootstrap github \
@@ -30,13 +47,13 @@ k3d cluster create --registry-use k3d-registry.localhost:5000
    --path=clusters/local
  ```
    
-2. Check the progress of the deployment
+#### 5. Check the progress of the deployment
 
 ```shell
 kubectl get Kustomization -n flux-system -w
 ```
 
-3. (optional) Connect to the Tekton Dashboard
+#### 6.(optional) Connect to the Tekton Dashboard
 
 The Dashboard is deployed and accessible via the `tekton-dashboard` service on port 9097.
 
