@@ -12,7 +12,7 @@ jobs:
         id: vars
         run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
 
-      - name: Install K3d (see https://k3d.io/#installation) & flux & Tekton CLI
+      - name: Install K3d (see https://k3d.io/#installation), Flux, Tekton CLI & jq
         run: |
           brew install fluxcd/tap/flux
           brew install k3d
@@ -20,7 +20,7 @@ jobs:
           brew install tektoncd/tools/tektoncd-cli
           brew install jq
 
-      - name: Bootstrap k3d
+      - name: Bootstrap K3d
         run: |
           k3d registry create registry.localhost --port 5000
           k3d cluster create --registry-use k3d-registry.localhost:5000
