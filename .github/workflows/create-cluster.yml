@@ -28,9 +28,9 @@ jobs:
       # See creation of Personal Access Token at https://fluxcd.io/docs/cmd/flux_bootstrap_github/
       - name: Install Flux into K3d cluster & connect to GitHub repository https://github.com/marcopaga/tekton-demo
         run: |
-          GITHUB_USER=marcopaga GITHUB_TOKEN=${{ secrets.FLUX_GITHUB_TOKEN }} flux bootstrap github \
-          --owner=marcopaga \
-          --repository=tekton-demo \
+          GITHUB_TOKEN=${{ secrets.FLUX_GITHUB_TOKEN }} flux bootstrap github \
+          --owner=${{ github.repository_owner }} \
+          --repository=${{ github.event.repository.name }} \
           --private=false \
           --personal=true \
           --branch=${{ steps.vars.outputs.branch_name }} \
