@@ -10,7 +10,7 @@ spec:
     name: flux-system
   path: ./tekton-triggers
   dependsOn:
-  - name: tekton-base
+  - name: tekton-ci-config
   prune: true
   validation: client
   targetNamespace: tekton-pipelines
