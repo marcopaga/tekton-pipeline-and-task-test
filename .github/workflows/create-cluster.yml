@@ -12,18 +12,22 @@ jobs:
         id: vars
         run: echo ::set-output name=branch_name::${GITHUB_REF#refs/*/}
 
-      - name: Install K3d (see https://k3d.io/#installation), Flux, Tekton CLI & jq
+      - name: Install Tools Flux, Tekton CLI & jq
         run: |
           brew install fluxcd/tap/flux
-          brew install k3d
           brew tap tektoncd/tools
           brew install tektoncd/tools/tektoncd-cli
           brew install jq
 
-      - name: Bootstrap K3d
-        run: |
-          k3d registry create registry.localhost --port 5000
-          k3d cluster create --registry-use k3d-registry.localhost:5000
+      - uses: AbsaOSS/k3d-action@v1.6.0
+        name: "Bootstrap K3d"
+        with:
+          cluster-name: "k3d-testcluster"
+          args: >-
+            -p "8080:8080@agent:0:direct"
+            --agents 1
+            --image docker.io/rancher/k3s:v1.20.4-k3s1
+            --k3s-arg "--no-deploy=traefik,servicelb,metrics-server@server:*"
 
       # See creation of Personal Access Token at https://fluxcd.io/docs/cmd/flux_bootstrap_github/
       - name: Install Flux into K3d cluster & connect to GitHub repository https://github.com/marcopaga/tekton-demo
