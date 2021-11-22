@@ -19,7 +19,7 @@ jobs:
           brew install tektoncd/tools/tektoncd-cli
           brew install jq
 
-      - uses: AbsaOSS/k3d-action@v1.6.0
+      - uses: AbsaOSS/k3d-action@v1.5.0
         name: "Bootstrap K3d"
         with:
           cluster-name: "k3d-testcluster"
