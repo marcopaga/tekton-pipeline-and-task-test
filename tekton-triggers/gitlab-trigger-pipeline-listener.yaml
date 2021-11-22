@@ -1,0 +1,45 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: gitlab-listener
+spec:
+  serviceAccountName: tekton-triggers-gitlab-sa
+  triggers:
+    - name: gitlab-push-events-trigger
+      interceptors:
+        - name: "verify-gitlab-payload"
+          ref:
+            name: "gitlab"
+            kind: ClusterInterceptor
+          params:
+            - name: secretRef
+              value:
+                secretName: "gitlab-secret"
+                secretKey: "secretToken"
+            - name: eventTypes
+              value:
+                - "Push Hook"
+      bindings:
+        - name: gitrevision
+          value: $(body.checkout_sha)
+        - name: gitrepositoryurl
+          value: $(body.repository.git_http_url)
+      template:
+        spec:
+          params:
+            - name: gitrevision
+            - name: gitrepositoryurl
+            - name: message 
+              description: The message to print
+              default: This is the default message
+            - name: contenttype
+              description: The Content-Type of the event
+          resourcetemplates:
+            - apiVersion: tekton.dev/v1beta1
+              kind: PipelineRun
+              metadata:
+                generateName: hello-goodbye-triggered-pipeline-
+              spec:
+                pipelineRef:
+                  name: hello-goodbye-pipeline
+

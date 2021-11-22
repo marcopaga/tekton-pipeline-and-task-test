@@ -22,8 +22,7 @@ jobs:
 
       - name: Bootstrap K3d
         run: |
-          k3d registry create registry.localhost --port 5000
-          k3d cluster create --registry-use k3d-registry.localhost:5000
+          k3d cluster create -p "8081:80@loadbalancer" --agents 2
 
       # See creation of Personal Access Token at https://fluxcd.io/docs/cmd/flux_bootstrap_github/
       - name: Install Flux into K3d cluster & connect to GitHub repository https://github.com/marcopaga/tekton-demo
@@ -50,6 +49,7 @@ jobs:
           kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/flux-system
           kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/tekton-base
           kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/tekton-tasks
+          kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/tekton-triggers
           kubectl -n flux-system wait --for=condition=READY=True --timeout=60s kustomizations.kustomize.toolkit.fluxcd.io/tekton-ci-config
 
       - name: Introspection
@@ -70,3 +70,9 @@ jobs:
           kubectl -n tekton-pipelines wait --for=condition=SUCCEEDED=True --timeout=60s pipelineruns.tekton.dev/$PIPELINE_RUN_NAME
           tkn pr --namespace tekton-pipelines logs $PIPELINE_RUN_NAME
 
+      - name: Execute and verify Trigger
+        run: |
+          EVENT_ID=$(./trigger-tekton.sh | jq -r '.eventID')
+          PIPELINE_RUN_NAME=$(kubectl get pipelineruns -ntekton-pipelines -l triggers.tekton.dev/triggers-eventid==$EVENT_ID -o json | jq -r '.items[0].metadata.name')
+          kubectl -n tekton-pipelines wait --for=condition=SUCCEEDED=True --timeout=60s pipelineruns.tekton.dev/$PIPELINE_RUN_NAME
+          tkn pr --namespace tekton-pipelines logs $PIPELINE_RUN_NAME
