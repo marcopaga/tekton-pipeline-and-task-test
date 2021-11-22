@@ -41,5 +41,5 @@ spec:
                 generateName: hello-goodbye-triggered-pipeline-
               spec:
                 pipelineRef:
-                  name: simple-buildpack-pipeline
+                  name: hello-goodbye-pipeline
 
