@@ -4,4 +4,6 @@ namespace: tekton-triggers
 resources:
 - https://storage.googleapis.com/tekton-releases/triggers/previous/v0.17.1/release.yaml
 - https://storage.googleapis.com/tekton-releases/triggers/previous/v0.17.1/interceptors.yaml
-
+- ./rbac.yaml
+- ./gitlab-secret.yaml
+- ./gitlab-trigger-pipeline-listener.yaml
