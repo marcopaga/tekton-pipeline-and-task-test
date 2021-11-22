@@ -7,3 +7,4 @@ resources:
 - ./rbac.yaml
 - ./gitlab-secret.yaml
 - ./gitlab-trigger-pipeline-listener.yaml
+- ./trigger-ingress.yaml
