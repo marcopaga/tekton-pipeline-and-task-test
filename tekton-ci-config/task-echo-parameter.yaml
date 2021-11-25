@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: echo-parameter
+spec:
+  params:
+    - name: git-repo-url
+      type: string
+    - name: git-revision
+      type: string
+  steps:
+    - name: hello
+      image: ubuntu
+      command:
+        - echo
+      args:
+        - "Repository: $(params.git-repo-url) Revision: $(params.git-revision)"

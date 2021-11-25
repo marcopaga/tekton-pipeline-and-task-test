@@ -20,26 +20,28 @@ spec:
               value:
                 - "Push Hook"
       bindings:
-        - name: gitrevision
+        - name: git-revision
           value: $(body.checkout_sha)
-        - name: gitrepositoryurl
+        - name: git-repository-url
           value: $(body.repository.git_http_url)
       template:
         spec:
           params:
-            - name: gitrevision
-            - name: gitrepositoryurl
-            - name: message 
-              description: The message to print
-              default: This is the default message
-            - name: contenttype
-              description: The Content-Type of the event
+            - name: git-revision
+            - name: git-repository-url
           resourcetemplates:
             - apiVersion: tekton.dev/v1beta1
               kind: PipelineRun
               metadata:
-                generateName: hello-goodbye-triggered-pipeline-
+                generateName: show-parameter-triggered-pipeline-
               spec:
                 pipelineRef:
-                  name: hello-goodbye-pipeline
+                  name: show-parameter-pipeline
+                params:
+                  - name: image
+                    value: test-image-build-by-buildpack-and-triggered:latest
+                  - name: git-repository-url
+                    value: $(tt.params.git-repository-url)
+                  - name: git-revision
+                    value: $(tt.params.git-revision)
 

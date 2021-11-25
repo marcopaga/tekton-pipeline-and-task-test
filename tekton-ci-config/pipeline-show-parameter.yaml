@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: show-parameter-pipeline
+spec:
+  params:
+    - name: git-repository-url
+      type: string
+      description: "URL to the git repository"
+      default: "*** not set ***"
+    - name: git-revision
+      type: string
+      description: "Revision within the specified git repository e.g. Branch, Tag or commit id"
+  tasks:
+    - name: echo-parameter
+      taskRef:
+        name: echo-parameter
+      params:
+        - name: git-repo-url
+          value: "$(params.git-repository-url)"
+        - name: git-revision
+          value: "$(params.git-revision)"
