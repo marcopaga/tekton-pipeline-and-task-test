@@ -30,10 +30,10 @@ jobs:
           GITHUB_TOKEN=${{ secrets.FLUX_GITHUB_TOKEN }} flux bootstrap github \
           --owner=${{ github.repository_owner }} \
           --repository=${{ github.event.repository.name }} \
+          --branch=${{ steps.vars.outputs.branch_name }} \
           --private=false \
           --personal=true \
           --token-auth \
-          --branch=${{ steps.vars.outputs.branch_name }} \
           --path=clusters/local
 
       - name: Wait for Flux CRD Deployment
