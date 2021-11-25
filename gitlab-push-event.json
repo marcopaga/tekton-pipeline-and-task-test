@@ -1,10 +1,10 @@
 {
   "object_kind": "push",
   "event_name": "push",
-  "before": "1a1736ec3d7b03349b31218a2f2c572c7c7206d6",
-  "after": "1a1736ec3d7b03349b31218a2f2c572c7c7206d6",
+  "before": "5aabd8d9b605a80e45a379b987c6b835dc7af1f8",
+  "after": "5aabd8d9b605a80e45a379b987c6b835dc7af1f8",
   "ref": "refs/heads/main",
-  "checkout_sha": "1a1736ec3d7b03349b31218a2f2c572c7c7206d6",
+  "checkout_sha": "5aabd8d9b605a80e45a379b987c6b835dc7af1f8",
   "message": null,
   "user_id": 111448,
   "user_name": "Dibyo Mukherjee",
@@ -32,10 +32,10 @@
   },
   "commits": [
     {
-      "id": "1a1736ec3d7b03349b31218a2f2c572c7c7206d6",
-      "message": "Add new file",
+      "id": "5aabd8d9b605a80e45a379b987c6b835dc7af1f8",
+      "message": "Login to GHCR changed",
       "timestamp": "2020-01-24T17:05:48+00:00",
-      "url": "https://gitlab.com/dibyom/triggers/-/commit/1a1736ec3d7b03349b31218a2f2c572c7c7206d6",
+      "url": "https://github.com/marcopaga/feeding-the-ci-process-single-project/commit/c5bb7c4d28b55e2704e057b11d084d83d3fa4964",
       "author": {
         "name": "Dibyo Mukherjee",
         "email": "foo@bar.com"
@@ -48,12 +48,12 @@
   "total_commits_count": 1,
   "push_options": {},
   "repository": {
-    "name": "triggers",
-    "url": "git@gitlab.com:dibyom/triggers.git",
+    "name": "feeding-the-ci-process-single-project",
+    "url": "https://github.com/marcopaga/feeding-the-ci-process-single-project.git",
     "description": "",
-    "homepage": "https://gitlab.com/dibyom/triggers",
-    "git_http_url": "https://gitlab.com/dibyom/triggers.git",
-    "git_ssh_url": "git@gitlab.com:dibyom/triggers.git",
+    "homepage": "https://github.com/marcopaga/feeding-the-ci-process-single-project",
+    "git_http_url": "https://github.com/marcopaga/feeding-the-ci-process-single-project.git",
+    "git_ssh_url": "git@github.com:marcopaga/feeding-the-ci-process-single-project.git",
     "visibility_level": 20
   }
 }
