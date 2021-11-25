@@ -76,4 +76,6 @@ jobs:
           EVENT_ID=$(./trigger-tekton.sh | jq -r '.eventID')
           PIPELINE_RUN_NAME=$(kubectl get pipelineruns -ntekton-pipelines -l triggers.tekton.dev/triggers-eventid==$EVENT_ID -o json | jq -r '.items[0].metadata.name')
           kubectl -n tekton-pipelines wait --for=condition=SUCCEEDED=True --timeout=60s pipelineruns.tekton.dev/$PIPELINE_RUN_NAME
-          tkn pr --namespace tekton-pipelines logs $PIPELINE_RUN_NAME
+          COMMIT_ID_FROM_GITLAB_PUSH_EVENT_JSON="5aabd8d9b605a80e45a379b987c6b835dc7af1f8"
+          tkn pr --namespace tekton-pipelines logs $PIPELINE_RUN_NAME | grep ${COMMIT_ID_FROM_GITLAB_PUSH_EVENT_JSON}  || (echo "Commit Id not found";exit 1)
+          tkn pr --namespace tekton-pipelines logs $PIPELINE_RUN_NAME | grep "https://github.com/marcopaga/feeding-the-ci-process-single-project.git"  || (echo "Repository not found";exit 1)
