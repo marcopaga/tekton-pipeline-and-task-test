@@ -1,6 +1,11 @@
 name: create-cluster
 
-on: [push]
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  push:
+    branches:
+    - "*"
 
 jobs:
   build:
