@@ -5,7 +5,7 @@ metadata:
 spec:
   steps:
     - name: hello
-      image: ubuntu
+      image: bash:latest
       command:
         - echo
       args:
