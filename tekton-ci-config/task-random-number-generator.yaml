@@ -1,0 +1,15 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: random-number-generator
+spec:
+  results:
+    - name: random-number
+      description: "The created random-number"
+  steps:
+    - name: create-random-number
+      image: bash:latest
+      script: |
+        #!/usr/bin/env bash
+        echo "Creating very random number and writing it into $(results.random-number.path)"
+        echo "42" | tr -d '\n' > $(results.random-number.path)

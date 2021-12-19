@@ -3,9 +3,13 @@ kind: Task
 metadata:
   name: goodbye
 spec:
+  params:
+    - name: "random-number"
+      default: "random-number not provided"
   steps:
     - name: goodbye
-      image: ubuntu
+      image: bash:latest
       script: |
-        #!/bin/bash
+        #!/usr/bin/env bash
         echo "Goodbye World!"
+        echo "Random number from previous step: $(params.random-number)"

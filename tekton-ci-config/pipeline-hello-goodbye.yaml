@@ -12,3 +12,9 @@ spec:
         - hello
       taskRef:
         name: goodbye
+      params:
+        - name: random-number
+          value: "$(tasks.random-number.results.random-number)"
+    - name: random-number
+      taskRef:
+        name: random-number-generator
