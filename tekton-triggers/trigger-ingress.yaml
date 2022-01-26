@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: el-gitlab-listener
+                name: el-github-listener
                 port:
                   number: 8080

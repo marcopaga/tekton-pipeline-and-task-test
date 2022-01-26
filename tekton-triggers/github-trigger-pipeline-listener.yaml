@@ -1,29 +1,35 @@
 apiVersion: triggers.tekton.dev/v1beta1
 kind: EventListener
 metadata:
-  name: gitlab-listener
+  name: github-listener
 spec:
-  serviceAccountName: tekton-triggers-gitlab-sa
+  serviceAccountName: tekton-triggers-sa
   triggers:
-    - name: gitlab-push-events-trigger
+    - name: github-push-events-trigger
       interceptors:
-        - name: "verify-gitlab-payload"
+        - name: "verify-github-payload"
           ref:
-            name: "gitlab"
+            name: "github"
             kind: ClusterInterceptor
           params:
             - name: secretRef
               value:
-                secretName: "gitlab-secret"
+                secretName: "github-secret"
                 secretKey: "secretToken"
             - name: eventTypes
               value:
-                - "Push Hook"
+                - "pull_request"
+        - name: "only when PRs are opened"
+            ref:
+              name: "cel"
+            params:
+              - name: "filter"
+                value: "body.action in ['opened', 'synchronize', 'reopened']"
       bindings:
         - name: git-revision
-          value: $(body.checkout_sha)
+          value: $(body.pull_request.head.sha)
         - name: git-repository-url
-          value: $(body.repository.git_http_url)
+          value: $(body.repository.clone_url)
       template:
         spec:
           params:
