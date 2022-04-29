@@ -2,7 +2,7 @@
   "extends": [
     ["config:base", ":rebaseStalePrs"]
   ],
-  "stabilityDays": "5",
+  "stabilityDays": 5,
   "automerge": true,
   "automergeType": "branch",
   "major": {
